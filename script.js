@@ -1,0 +1,21 @@
+const clear = document.querySelector('.clear');
+const posNeg = document.querySelector('.pos-neg');
+const percentage = document.querySelector('.percentage');
+const one = document.querySelector('.one');
+const two = document.querySelector('.two');
+const three = document.querySelector('.three');
+const four = document.querySelector('.four');
+const five = document.querySelector('.five');
+const six = document.querySelector('.six');
+const seven = document.querySelector('.seven');
+const eight = document.querySelector('.eight');
+const nine = document.querySelector('.nine');
+const zero = document.querySelector('.zero');
+const decimal = document.querySelector('.decimal');
+const multi = document.querySelector('.multi');
+const divide = document.querySelector('.divide');
+const add = document.querySelector('.add');
+const subtract = document.querySelector('.subtract');
+const equal = document.querySelector('.equal');
+
+equal.addEventListener('click', (e)=> console.log(e.target.innerText));
