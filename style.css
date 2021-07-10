@@ -41,6 +41,7 @@ body {
 }
 
 
+
 .operation-btn{
     height: 50px;
     border: black 1px solid;
@@ -101,9 +102,6 @@ body {
     align-content: space-between;
 }
 
-/* .number-btn:nth-child(1){
-    flex-basis:62.5%;
-} */
 
 .number-btn:nth-last-child(2){
     flex-basis:62.5%;
@@ -119,6 +117,9 @@ body {
     justify-content: space-between;
 }
 
+.clear{
+    background-color: red;
+}
 
 
 

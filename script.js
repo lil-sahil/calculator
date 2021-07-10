@@ -20,7 +20,8 @@ const subtract = document.querySelector('.subtract');
 const equal = document.querySelector('.equal');
 
 
-let screenValue = 0;
+let currentScreenValue = 0;
+let previousScreenValue = 0;
 
 // Display pushed buttons on screen
 function displayOnScreen() {
