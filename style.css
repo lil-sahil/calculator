@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans+SC&display=swap');
+
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    font-family: "Encode Sans SC", sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    background-color: #e6e6ff;
+}
+
+/* Utilities */
+.flex-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.number-btn{
+    flex-basis: 30%;
+    height: 50px;
+    border: black 1px solid;
+    border-radius: 6px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ccccb3;
+}
+
+
+.operation-btn{
+    height: 50px;
+    border: black 1px solid;
+    border-radius: 6px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ff751a;
+    font-size: 18px;
+}
+
+.number-btn:hover, .operation-btn:hover{
+    cursor: pointer;
+    font-size:22px;
+}
+
+.calculator-body {
+    max-width: 800px;
+    height: 500px;
+    border: black solid 1px;
+    margin: 100px auto;
+    background-color: #1a1a1a;
+}
+
+
+/* Screen area */
+.calculator-screen {
+    border: #fff 1px solid;
+    width: 70%;
+    height: 70px;
+    margin: 20px auto;
+    background-color: #c2c2a3;
+}
+
+/* Number pad area */
+.calculator-keypad-area{
+    width: 90%;
+    height: 400px;
+}
+
+.number-area {
+    width: 500px;
+    height: 70%;
+}
+
+.calculator-keypad-area .flex-row {
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-content: space-between;
+}
+
+/* .number-btn:nth-child(1){
+    flex-basis:62.5%;
+} */
+
+.number-btn:nth-last-child(2){
+    flex-basis:62.5%;
+} 
+
+
+.operation-area{
+    width: 200px;
+    height: 70%;
+}
+
+.calculator-keypad-area .flex-col {
+    justify-content: space-between;
+}
+
+
+
+
+
