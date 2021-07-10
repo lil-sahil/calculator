@@ -74,6 +74,14 @@ body {
     height: 70px;
     margin: 20px auto;
     background-color: #c2c2a3;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    overflow: hidden;
+}
+
+.calculator-screen h1 {
+    margin: 0 3px;
 }
 
 /* Number pad area */
