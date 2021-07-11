@@ -18,48 +18,116 @@ const divide = document.querySelector('.divide');
 const add = document.querySelector('.add');
 const subtract = document.querySelector('.subtract');
 const equal = document.querySelector('.equal');
+const answerH1 = document.querySelector('.answer');
 
 
-let currentScreenValue = 0;
-let previousScreenValue = 0;
+
+let currentScreenValue = "";
+let previousScreenValue = "";
+
+// show on screen
+function display(){
+    screen.childNodes[1].textContent = currentScreenValue; 
+}
+
 
 // Display pushed buttons on screen
-function displayOnScreen() {
+function writeOnScreen() {
+    
     document.querySelectorAll(".display").forEach( (event) => {
-    event.addEventListener('click', (e) => {
+    event.addEventListener('click', (e) => { 
         
+        answerH1.style.display = 'none';
         // Max number of digits is 27
-        if (screen.childNodes.length === 27){
+        
+        if (screen.childNodes[1].textContent.length === 27){
             return false;
         }
 
-        let tempDisp = document.createElement('h1');
-        screen.appendChild(tempDisp).textContent = e.target.innerText
+        screen.childNodes[1].textContent += e.target.innerText;
         });
     });
 }
 
-displayOnScreen();
+writeOnScreen();
 
 
 // Clear screen whenever clear button or any of the operation buttons are pressed.
 // Also store the value from screen.
 
-function clearScreen() {
+function storeValues() {
     document.querySelectorAll('.operation-btn').forEach( (btn) => {
         btn.addEventListener('click', () => {
-            getScreenValue();
-            Array.from(screen.childNodes).forEach(n => n.remove());
+            
+            if (previousScreenValue === ""){
+
+                previousScreenValue = screen.childNodes[1].textContent;
+            } else {
+                currentScreenValue = screen.childNodes[1].textContent;
+            }
+
+            
+            screen.childNodes[1].textContent = '';
         })
     });
 }
 
+storeValues();
 
-// Get the values stored in the H1 tags on the screen,
+// Clear data
+let clearData = () => clear.addEventListener('click', () => {
+    screen.childNodes[1].textContent = "";
+    previousScreenValue = "";
+    currentScreenValue = "";
+})
+clearData()
 
-function getScreenValue(){
-    return -1;
+
+// Caculator Operation
+function operate(){
+
+    // Display current value on screen
+
+    display();
+
+    document.querySelectorAll('.operation-btn').forEach( btn => {
+        btn.addEventListener('click', (e) => {
+            
+            if( (previousScreenValue === "") || (currentScreenValue === "") ){
+                screen.childNodes[1].textContent = "";
+                return false;
+            }
+            switch (e.target.textContent){
+                case '+':
+                    addNumbers(previousScreenValue, currentScreenValue);  
+                    break;
+                case 'x':
+                    multiplyNumbers(previousScreenValue, currentScreenValue);
+                    break;
+                case '-':
+                    subtractNumbers(previousScreenValue, currentScreenValue);
+                    break;
+                case '÷':
+                    divideNumers(previousScreenValue, currentScreenValue);
+                    break;
+            }
+        });
+    });
 }
+
+operate();
+
+// Add
+function addNumbers(val1, val2){
+
+    answerH1.textContent = parseFloat(val1) + parseFloat(val2);
+    answerH1.style.display = "block";
+    screen.childNodes[1].textContent = "";
+    
+    previousScreenValue = parseFloat(val1) + parseFloat(val2);
+
+}
+
 
 
 
