@@ -2,28 +2,13 @@ const screen = document.querySelector(".calculator-screen");
 const clear = document.querySelector('.clear');
 const posNeg = document.querySelector('.pos-neg');
 const percentage = document.querySelector('.percentage');
-const one = document.querySelector('.one');
-const two = document.querySelector('.two');
-const three = document.querySelector('.three');
-const four = document.querySelector('.four');
-const five = document.querySelector('.five');
-const six = document.querySelector('.six');
-const seven = document.querySelector('.seven');
-const eight = document.querySelector('.eight');
-const nine = document.querySelector('.nine');
-const zero = document.querySelector('.zero');
-const decimal = document.querySelector('.decimal');
-const multi = document.querySelector('.multi');
-const divide = document.querySelector('.divide');
-const add = document.querySelector('.add');
-const subtract = document.querySelector('.subtract');
-const equal = document.querySelector('.equal');
 const answerH1 = document.querySelector('.answer');
 
 
 
 let currentScreenValue = "";
 let previousScreenValue = "";
+let operation = "";
 
 // show on screen
 function display(){
@@ -38,6 +23,7 @@ function writeOnScreen() {
     event.addEventListener('click', (e) => { 
         
         answerH1.style.display = 'none';
+        
         // Max number of digits is 27
         
         if (screen.childNodes[1].textContent.length === 27){
@@ -58,16 +44,17 @@ writeOnScreen();
 function storeValues() {
     document.querySelectorAll('.operation-btn').forEach( (btn) => {
         btn.addEventListener('click', () => {
-            
-            if (previousScreenValue === ""){
 
+            if (previousScreenValue === ""){
                 previousScreenValue = screen.childNodes[1].textContent;
+                screen.childNodes[1].textContent = '';
             } else {
                 currentScreenValue = screen.childNodes[1].textContent;
+                
+                operate(operation, currentScreenValue, previousScreenValue);
+                
             }
 
-            
-            screen.childNodes[1].textContent = '';
         })
     });
 }
@@ -80,40 +67,47 @@ let clearData = () => clear.addEventListener('click', () => {
     previousScreenValue = "";
     currentScreenValue = "";
     answerH1.style.display = 'none';
+    operation = "";
 })
+
 clearData()
+
+// get operator
+
+function getOperator(){
+    document.querySelectorAll('.operation-btn').forEach( btn => {
+        btn.addEventListener('click', (e) => {
+            operation = e.target.textContent;
+        });
+    });
+}
+
+getOperator();
+
 
 
 // Caculator Operation
-function operate(){
+function operate(operationSelected, currentVal, prevVal){
+    
+    switch (operationSelected){
+        case '+':
+            addNumbers(prevVal, currentVal); 
+            break;
+        case 'x':
+            multiplyNumbers(prevVal, currentVal);
+            break;
+        case '-':
+            subtractNumbers(prevVal, currentVal);
+            break;
+        case '÷':
+            divideNumbers(prevVal, currentVal);
+            break;
+        case "=":
+            showAnswer();
+            break;
 
-    // Display current value on screen
+    }
 
-    display();
-
-    document.querySelectorAll('.operation-btn').forEach( btn => {
-        btn.addEventListener('click', (e) => {
-            
-            if( (previousScreenValue === "") || (currentScreenValue === "") ){
-                screen.childNodes[1].textContent = "";
-                return false;
-            }
-            switch (e.target.textContent){
-                case '+':
-                    addNumbers(previousScreenValue, currentScreenValue);  
-                    break;
-                case 'x':
-                    multiplyNumbers(previousScreenValue, currentScreenValue);
-                    break;
-                case '-':
-                    subtractNumbers(previousScreenValue, currentScreenValue);
-                    break;
-                case '÷':
-                    divideNumers(previousScreenValue, currentScreenValue);
-                    break;
-            }
-        });
-    });
 }
 
 operate();
@@ -122,12 +116,44 @@ operate();
 function addNumbers(val1, val2){
 
     answerH1.textContent = parseFloat(val1) + parseFloat(val2);
+    previousScreenValue = parseFloat(answerH1.textContent);
     answerH1.style.display = "block";
     screen.childNodes[1].textContent = "";
-    
-    previousScreenValue = parseFloat(val1) + parseFloat(val2);
+}
+
+// Multiply
+function multiplyNumbers(val1, val2){
+
+    answerH1.textContent = parseFloat(val1) * parseFloat(val2);
+    previousScreenValue = parseFloat(answerH1.textContent);
+    answerH1.style.display = "block";
+    screen.childNodes[1].textContent = "";
 
 }
+
+// Subtract
+function subtractNumbers(val1, val2){
+
+    answerH1.textContent = parseFloat(val1) - parseFloat(val2);
+    previousScreenValue = parseFloat(answerH1.textContent);
+    answerH1.style.display = "block";
+    screen.childNodes[1].textContent = "";
+}
+
+// Divide
+function divideNumbers(val1, val2){
+
+    answerH1.textContent = parseFloat(val1) / parseFloat(val2);
+    previousScreenValue = parseFloat(answerH1.textContent);
+    answerH1.style.display = "block";
+    screen.childNodes[1].textContent = "";
+}
+
+function showAnswer(){
+    answerH1.style.display = "block";
+}
+
+
 
 
 
