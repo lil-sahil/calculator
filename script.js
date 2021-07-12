@@ -79,6 +79,7 @@ let clearData = () => clear.addEventListener('click', () => {
     screen.childNodes[1].textContent = "";
     previousScreenValue = "";
     currentScreenValue = "";
+    answerH1.style.display = 'none';
 })
 clearData()
 
