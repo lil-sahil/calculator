@@ -23,7 +23,7 @@ function writeOnScreen() {
     document.querySelectorAll(".display").forEach( (event) => {
     event.addEventListener('click', (e) => { 
         
-        if (e.target.innerText !== "+/-"){
+        if ( (e.target.innerText !== "+/-") || (e.target.innerText !=="%") ){
             answerH1.style.display = 'none';
         }
         
@@ -40,6 +40,11 @@ function writeOnScreen() {
 
         // Insert Negative
         if (inserNagative(e)){
+            return 1;
+        }
+
+        // Turn percentage
+        if (turnPercent(e)){
             return 1;
         }
 
@@ -71,6 +76,24 @@ function inserNagative(e){
         return true;
     }
 }
+
+// Turn percentage
+
+function turnPercent(e){
+    if (e.target.innerText === '%'){
+        if (screen.childNodes[1].textContent !==""){
+            screen.childNodes[1].textContent /= 100;
+        }
+
+        else {
+            screen.childNodes[1].textContent = previousScreenValue / 100;
+            answerH1.style.display = 'none'
+            previousScreenValue = '';
+        }
+        return true;
+    }
+}
+
 
 
 // Clear screen whenever clear button or any of the operation buttons are pressed.
