@@ -1,6 +1,7 @@
 const screen = document.querySelector(".calculator-screen");
 const clear = document.querySelector('.clear');
 const posNeg = document.querySelector('.pos-neg');
+const decimal = document.querySelector('.decimal');
 const percentage = document.querySelector('.percentage');
 const answerH1 = document.querySelector('.answer');
 
@@ -17,7 +18,7 @@ function display(){
 
 
 // Display pushed buttons on screen
-function writeOnScreen() {
+function writeOnScreen() {    
     
     document.querySelectorAll(".display").forEach( (event) => {
     event.addEventListener('click', (e) => { 
@@ -29,13 +30,24 @@ function writeOnScreen() {
         if (screen.childNodes[1].textContent.length === 27){
             return false;
         }
+        
+        // Check if decimal was already entered and if it is chosen again.
+        if (decimalEntered(e)){
+            return 1;
+        }
 
         screen.childNodes[1].textContent += e.target.innerText;
         });
     });
 }
-
 writeOnScreen();
+
+// Check if decimal has already been entered, then do not enter again.
+function decimalEntered(e){
+    if ( (screen.childNodes[1].textContent).includes(".") && (e.target.innerText === '.')){
+        return true;
+    }
+}
 
 
 // Clear screen whenever clear button or any of the operation buttons are pressed.
@@ -51,7 +63,12 @@ function storeValues() {
             } else {
                 currentScreenValue = screen.childNodes[1].textContent;
                 
-                operate(operation, currentScreenValue, previousScreenValue);
+                // Prevent NAN when selecting another operation.
+                if (currentScreenValue === ""){
+                    return 1;
+                }else{
+                    operate(operation, currentScreenValue, previousScreenValue);
+                }
                 
             }
 
@@ -102,6 +119,9 @@ function operate(operationSelected, currentVal, prevVal){
         case '÷':
             divideNumbers(prevVal, currentVal);
             break;
+        case '+/-':
+            makeNegative(currentVal);
+            break;
         case "=":
             showAnswer();
             break;
@@ -151,6 +171,16 @@ function divideNumbers(val1, val2){
 
 function showAnswer(){
     answerH1.style.display = "block";
+}
+
+// Negative or Positive
+
+function makeNegative(val2){
+
+    answerH1.textContent = val2 * -1;
+    previousScreenValue = answerH1.textContent;
+    answerH1.style.display = 'block';
+    screen.childNodes[1].textContent = "";
 }
 
 
