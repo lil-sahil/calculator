@@ -23,7 +23,9 @@ function writeOnScreen() {
     document.querySelectorAll(".display").forEach( (event) => {
     event.addEventListener('click', (e) => { 
         
-        answerH1.style.display = 'none';
+        if (e.target.innerText !== "+/-"){
+            answerH1.style.display = 'none';
+        }
         
         // Max number of digits is 27
         
@@ -36,6 +38,11 @@ function writeOnScreen() {
             return 1;
         }
 
+        // Insert Negative
+        if (inserNagative(e)){
+            return 1;
+        }
+
         screen.childNodes[1].textContent += e.target.innerText;
         });
     });
@@ -45,6 +52,22 @@ writeOnScreen();
 // Check if decimal has already been entered, then do not enter again.
 function decimalEntered(e){
     if ( (screen.childNodes[1].textContent).includes(".") && (e.target.innerText === '.')){
+        return true;
+    }
+}
+
+// Insert Negative
+function inserNagative(e){
+    if (e.target.innerText === '+/-'){
+        if (screen.childNodes[1].textContent !==""){
+            screen.childNodes[1].textContent *= -1;
+        }
+
+        else {
+            screen.childNodes[1].textContent = previousScreenValue * -1;
+            answerH1.style.display = 'none'
+            previousScreenValue = '';
+        }
         return true;
     }
 }
@@ -122,10 +145,6 @@ function operate(operationSelected, currentVal, prevVal){
         case '+/-':
             makeNegative(currentVal);
             break;
-        case "=":
-            showAnswer();
-            break;
-
     }
 
 }
@@ -138,12 +157,11 @@ function addNumbers(val1, val2){
     answerH1.textContent = parseFloat(val1) + parseFloat(val2);
     previousScreenValue = parseFloat(answerH1.textContent);
     answerH1.style.display = "block";
-    screen.childNodes[1].textContent = "";
+    screen.childNodes[1].textContent = previousScreenValue;
 }
 
 // Multiply
 function multiplyNumbers(val1, val2){
-
     answerH1.textContent = parseFloat(val1) * parseFloat(val2);
     previousScreenValue = parseFloat(answerH1.textContent);
     answerH1.style.display = "block";
@@ -169,19 +187,8 @@ function divideNumbers(val1, val2){
     screen.childNodes[1].textContent = "";
 }
 
-function showAnswer(){
-    answerH1.style.display = "block";
-}
 
-// Negative or Positive
 
-function makeNegative(val2){
-
-    answerH1.textContent = val2 * -1;
-    previousScreenValue = answerH1.textContent;
-    answerH1.style.display = 'block';
-    screen.childNodes[1].textContent = "";
-}
 
 
 
